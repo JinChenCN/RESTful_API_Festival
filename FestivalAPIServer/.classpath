@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="lib" path="lib/org.restlet.jar" sourcepath="/Users/jinchen/Documents/JavaLib/restlet-jse-2.3.4/src/org.restlet"/>
+	<classpathentry kind="lib" path="lib/org.restlet.ext.fileupload.jar"/>
+	<classpathentry kind="lib" path="lib/org.apache.commons.fileupload_1.3/org.apache.commons.fileupload.jar"/>
+	<classpathentry kind="lib" path="lib/org.apache.commons.io_2.0/org.apache.commons.io.jar"/>
+	<classpathentry kind="lib" path="lib/javax.servlet_3.1/javax.servlet.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
