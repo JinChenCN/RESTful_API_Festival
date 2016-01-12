@@ -68,9 +68,9 @@ public class Main {
 			wavePath = configFile.getProperty("waveFilePath");
 			festivalHome = configFile.getProperty("festivalHome");
 			token = configFile.getProperty("APIToken");
-			defaultVoice = configFile.getProperty("vice");
-			defaultEmotion = configFile.getProperty("emotion");
-			defaultLevel = configFile.getProperty("level");
+			defaultVoice = configFile.getProperty("defaultVoice");
+			defaultEmotion = configFile.getProperty("defaultEmotion");
+			defaultLevel = configFile.getProperty("defaultLevel");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
