@@ -51,7 +51,7 @@ public class Text2Wave extends ServerResource{
 			token = form.getValues("token");
 			if (token.equals(Main.token))
 			{		
-				result = Process(txt);		
+				result = process(txt);		
 			}
 			else
 			{
@@ -66,12 +66,25 @@ public class Text2Wave extends ServerResource{
 		return result; 
     }
 
-	private FileRepresentation Process(String txt){		
+	private FileRepresentation process(String txt){		
 		FileRepresentation result = new FileRepresentation(errorWave,MediaType.AUDIO_WAV);
 		String waveFilePath = "";
-		String txtFile = GenerateTxtFile(txt);		
 		waveFilePath = wavePath + GenerateUid() + ".wav";
-		String[] Command = {"/bin/sh", "-c", "cd " + festivalHome +"; ./" + "text2wave " + txtFile + " -o "  + waveFilePath};
+		String txtFile = GenerateTxtFile(txt);	
+		String[] Command = new String[3];
+		if (voice.equals(Main.defaultVoice))
+		{
+	
+			String[] CommandOnlyTxt = {"/bin/sh", "-c", "cd " + festivalHome +"; ./" + "text2wave " + txtFile + " -o "  + waveFilePath};
+			Command = CommandOnlyTxt;
+		}
+		else
+		{
+			String scmFile = GenerateSCMFile(voice);
+			String[] CommandChangeVoice = {"/bin/sh", "-c", "cd " + festivalHome +"; ./" + "text2wave " + "-eval " + scmFile + " " + txtFile + " -o "  + waveFilePath};	
+			Command = CommandChangeVoice;
+		}
+
 		if(ExcuteCommand(Command))
 		{
 			result = new FileRepresentation(waveFilePath,MediaType.AUDIO_WAV);		
@@ -82,6 +95,25 @@ public class Text2Wave extends ServerResource{
 		}
 		return result;
 	}
+	
+	private FileRepresentation process(String txt, String voice){		
+		FileRepresentation result = new FileRepresentation(errorWave,MediaType.AUDIO_WAV);
+		String waveFilePath = "";
+		String txtFile = GenerateTxtFile(txt);	
+		String scmFile = GenerateSCMFile(voice);
+		waveFilePath = wavePath + GenerateUid() + ".wav";
+		String[] Command = {"/bin/sh", "-c", "cd " + festivalHome +"; ./" + "text2wave " + "-eval " + scmFile + " " + txtFile + " -o "  + waveFilePath};
+		if(ExcuteCommand(Command))
+		{
+			result = new FileRepresentation(waveFilePath,MediaType.AUDIO_WAV);		
+		}
+		else
+		{
+			System.out.println("Generate wav file error");	
+		}
+		return result;
+	}
+	
 	
 	private String GenerateUid()
 	{
@@ -104,6 +136,34 @@ public class Text2Wave extends ServerResource{
 			
 			if (!txtFile.exists()){
 				System.out.println("Generate txt file error");	
+			}
+				
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}  catch (SecurityException e) {
+			   e.printStackTrace();
+			  }
+
+		return fileName;
+	}
+	
+	private String GenerateSCMFile(String voice)
+	{
+		String fileName = "";
+		String uniqueID = GenerateUid();
+		fileName = wavePath + uniqueID + ".scm";
+		try {
+			File scmFile = new File(fileName);
+			FileWriter fw;
+
+			fw = new FileWriter(scmFile.getAbsoluteFile());
+			BufferedWriter bw = new BufferedWriter(fw);
+			bw.write("(" + voice + ")");
+			bw.close();
+			
+			if (!scmFile.exists()){
+				System.out.println("Generate scm file error");	
 			}
 				
 		} catch (IOException e) {
