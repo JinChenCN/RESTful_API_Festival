@@ -47,9 +47,11 @@
 	<body>
 			<Center>
 		<font style="color:#2196F3"><h1>Festival RESTful API Web Client</h1></font>
-		<h3><p><font>Please input text in English : </font></p>
-		<form id="text2waveForm" method="get" action="http://localhost:8183/api/txt2wave" enctype="multipart/form-data" target="myiframe" onsubmit="return checkGetForm(this)">		
-			<textarea id="txt" name="txt" rows="10" cols="45"></textarea>
+		<form id="text2waveForm" method="get" action="http://robotspeech.auckland.ac.nz:8183/api/txt2wave" enctype="multipart/form-data" target="myiframe" onsubmit="return checkGetForm(this)">	
+      <h3><p><font>Please input the voice : </font></p>
+      <textarea id="voice" name="voice" rows="1" cols="45"></textarea>	
+      <h3><p><font>Please input text in English : </font></p>
+			<p><textarea id="txt" name="txt" rows="10" cols="45"></textarea></p>
       <div id="Token" style="visibility: hidden">
 			<p><font>API Token : </font><input id="token" name="token" type="password" value="TestToken"/></input></p>
 			</div>
@@ -60,7 +62,7 @@
 		<div style="margin: 0 auto; width:25%;padding-top:10px;">
 		<p><font><h3>Or upload scm file here : </h3></font></p>
 		<p></p>
-		<form method="post" action="http://localhost:8183/api/file2wave" enctype="multipart/form-data" target="myiframe" onsubmit="return checkPostForm(this)">
+		<form method="post" action="http://robotspeech.auckland.ac.nz:8183/api/file2wave" target="myiframe" enctype="multipart/form-data" onsubmit="return checkPostForm(this)">
 			
 		<p><input id="file" type="file" name="fileToUpload" /></p>
 		
