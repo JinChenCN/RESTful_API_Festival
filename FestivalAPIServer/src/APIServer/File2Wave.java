@@ -28,7 +28,7 @@ public class File2Wave extends ServerResource {
 	@Get
 	//TODO
 	//Need to get rid of this later
-	//Need to refactor the file2wave to use "Get" directly
+	//If it's possible, we'd better refactor the file2wave to use "Get" directly
 	public FileRepresentation getResource() throws IOException {
 		FileRepresentation result = new FileRepresentation(getLatestFilefromDir(wavePath),MediaType.AUDIO_WAV);		
 		return result; 
@@ -114,20 +114,6 @@ public class File2Wave extends ServerResource {
 	}
 	
 	private boolean ExcuteCommand(String[] command) 
-	{
-		boolean result = false;
-		Process p;
-		try {
-			p = Runtime.getRuntime().exec(command);
-			p.waitFor();
-			result = true;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}		
-		return result;
-	}
-	
-	private boolean ExcuteCommand(String command) 
 	{
 		boolean result = false;
 		Process p;

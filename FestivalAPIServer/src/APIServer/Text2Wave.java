@@ -96,25 +96,6 @@ public class Text2Wave extends ServerResource{
 		return result;
 	}
 	
-	private FileRepresentation process(String txt, String voice){		
-		FileRepresentation result = new FileRepresentation(errorWave,MediaType.AUDIO_WAV);
-		String waveFilePath = "";
-		String txtFile = GenerateTxtFile(txt);	
-		String scmFile = GenerateSCMFile(voice);
-		waveFilePath = wavePath + GenerateUid() + ".wav";
-		String[] Command = {"/bin/sh", "-c", "cd " + festivalHome +"; ./" + "text2wave " + "-eval " + scmFile + " " + txtFile + " -o "  + waveFilePath};
-		if(ExcuteCommand(Command))
-		{
-			result = new FileRepresentation(waveFilePath,MediaType.AUDIO_WAV);		
-		}
-		else
-		{
-			System.out.println("Generate wav file error");	
-		}
-		return result;
-	}
-	
-	
 	private String GenerateUid()
 	{
 		return UUID.randomUUID().toString();
@@ -139,7 +120,6 @@ public class Text2Wave extends ServerResource{
 			}
 				
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}  catch (SecurityException e) {
 			   e.printStackTrace();
