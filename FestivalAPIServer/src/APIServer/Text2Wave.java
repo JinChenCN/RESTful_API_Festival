@@ -33,20 +33,19 @@ public class Text2Wave extends ServerResource{
 		FileRepresentation result = new FileRepresentation(errorWave,MediaType.AUDIO_WAV);
 		Request request = getRequest();
 		Form form = request.getResourceRef().getQueryAsForm();
-		System.out.println(form.toString());
-		if(form.getValues("txt") != null)
+		if(form.getValues("txt") != null && form.getValues("txt") != "")
 		{
 			txt = form.getValues("txt");
 		}
 		else
 		{
 			System.out.println("query string txt is null");
-		}
-		if(form.getValues("voice") != null)
+		}		
+		if(form.getValues("voice") != null && form.getValues("voice") != "")
 		{
 			voice = form.getValues("voice");
 		}
-		if(form.getValues("token") != null)
+		if(form.getValues("token") != null && form.getValues("token") != "")
 		{
 			token = form.getValues("token");
 			if (token.equals(Main.token))
@@ -72,6 +71,7 @@ public class Text2Wave extends ServerResource{
 		waveFilePath = wavePath + GenerateUid() + ".wav";
 		String txtFile = GenerateTxtFile(txt);	
 		String[] Command = new String[3];
+		System.out.println("The current voice is: "+voice);
 		if (voice.equals(Main.defaultVoice))
 		{
 	

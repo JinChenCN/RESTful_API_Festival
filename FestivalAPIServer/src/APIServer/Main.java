@@ -26,7 +26,7 @@ public class Main {
 			System.out.println("Please add parameter to indicate the path of the config file.");
 			return;
 		}
-		getProperties(args[0]);
+		getProperties(args[0]);		
 		
 		// Initiate temporary folder for keeping auto generated files
 		File folder = new File(wavePath);
