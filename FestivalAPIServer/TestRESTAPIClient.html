@@ -58,18 +58,5 @@
 			<p><button type="submit"/><i class="glyphicon glyphicon-play-circle" aria-hidden="true" >Speak</i></button></p>
 		</form></h3>
 		</center>
-
-		<div style="margin: 0 auto; width:25%;padding-top:10px;">
-		<p><font><h3>Or upload scm file here : </h3></font></p>
-		<p></p>
-		<form method="post" action="http://robotspeech.auckland.ac.nz:8183/api/file2wave" target="myiframe" enctype="multipart/form-data" onsubmit="return checkPostForm(this)">
-			
-		<p><input id="file" type="file" name="fileToUpload" /></p>
-		
-		<p><button type="submit" /><i class="glyphicon glyphicon-play-circle" aria-hidden="true">Speak</i></button>
-</p>
-		</form>
-		<iframe name="myiframe" style="visibility: hidden"></iframe>
-	</div>
 	</body>
 </html>
