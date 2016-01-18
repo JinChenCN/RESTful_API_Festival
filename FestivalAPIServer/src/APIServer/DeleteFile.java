@@ -14,12 +14,13 @@ public class DeleteFile extends TimerTask  {
 
    public void run() {
     try {
+    	System.out.println("Scheduled deleting begins...");
     	int daysBack = this.DaysBack;
     	final File directory = new File(this.DirWay );
 	    if(directory.exists()){	        
 	        final File[] listFiles = directory.listFiles();          
 	        final long purgeTime = 
-	            System.currentTimeMillis() - (daysBack * 24 * 60 * 60 * 1000);
+	            System.currentTimeMillis() - (daysBack * 60 * 60 * 1000);
 	        for(File listFile : listFiles) {
 	            if(listFile.lastModified() < purgeTime) {
 	            	listFile.delete();               

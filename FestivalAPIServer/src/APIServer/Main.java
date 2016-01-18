@@ -51,7 +51,7 @@ public class Main {
 	    // Start the component.  
 	    component.start();	
 	    
-	    //Delete auto generated .txt and .wav files every 1 hour
+	    //Delete tmp files every 1 hour
 	    Timer time = new Timer(); 
 	    time.schedule(new DeleteFile(1, wavePath), 0, 1000 * 60 * 60 * 1);	   
 	   
