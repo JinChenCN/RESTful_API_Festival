@@ -14,7 +14,6 @@ public class DeleteFile extends TimerTask  {
 
    public void run() {
     try {
-    	System.out.println("Scheduled deleting begins...");
     	int daysBack = this.DaysBack;
     	final File directory = new File(this.DirWay );
 	    if(directory.exists()){	        
