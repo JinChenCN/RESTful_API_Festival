@@ -19,13 +19,15 @@ import org.restlet.resource.ServerResource;
  * the file will be deleted after having been sent to the client
  */
 
-public class Text2Wave extends ServerResource{
+public class SayEmotional extends ServerResource{
 	String txt = "";
 	String errorWave = Main.errorWave;
 	String noAuthorityWave = Main.noAuthorityWave;
 	String wavePath = Main.wavePath;
 	String festivalHome = Main.festivalHome;
 	String voice = Main.defaultVoice;
+	String emotion = Main.defaultEmotion;
+	String level = Main.defaultLevel;
 	String token = "";
 	
 	@Get
@@ -44,6 +46,14 @@ public class Text2Wave extends ServerResource{
 		if(form.getValues("voice") != null && form.getValues("voice") != "")
 		{
 			voice = form.getValues("voice");
+		}
+		if(form.getValues("emotion") != null && form.getValues("emotion") != "")
+		{
+			emotion = form.getValues("emotion");
+		}
+		if(form.getValues("level") != null && form.getValues("level") != "")
+		{
+			level = form.getValues("level");
 		}
 		if(form.getValues("token") != null && form.getValues("token") != "")
 		{
@@ -68,22 +78,9 @@ public class Text2Wave extends ServerResource{
 	private FileRepresentation process(String txt){		
 		FileRepresentation result = new FileRepresentation(errorWave,MediaType.AUDIO_WAV);
 		String waveFilePath = "";
-		waveFilePath = wavePath + generateUid() + ".wav";
-		String txtFile = generateTxtFile(txt);	
-		String[] Command = new String[3];
-		System.out.println("The current voice is: "+voice);
-		if (voice.equals(Main.defaultVoice))
-		{
-	
-			String[] CommandOnlyTxt = {"/bin/sh", "-c", "cd " + festivalHome +"; ./" + "text2wave " + txtFile + " -o "  + waveFilePath};
-			Command = CommandOnlyTxt;
-		}
-		else
-		{
-			String scmFile = generateSCMFile(voice);
-			String[] CommandChangeVoice = {"/bin/sh", "-c", "cd " + festivalHome +"; ./" + "text2wave " + "-eval " + scmFile + " " + txtFile + " -o "  + waveFilePath};	
-			Command = CommandChangeVoice;
-		}
+		waveFilePath = wavePath + GenerateUid() + ".wav";
+		String scriptFile = generateScriptFile(txt);		
+		String[] Command = {"/bin/sh", "-c", "cd " + festivalHome +"; ./" + "festival " + "--batch " + scriptFile};
 
 		if(excuteCommand(Command))
 		{
@@ -96,26 +93,33 @@ public class Text2Wave extends ServerResource{
 		return result;
 	}	
 		
-	private String generateUid()
+	private String GenerateUid()
 	{
 		return UUID.randomUUID().toString();
 	}
 	
-	private String generateTxtFile(String txt)
+	private String generateScriptFile(String txt)
 	{
 		String fileName = "";
-		String uniqueID = generateUid();
-		fileName = wavePath + uniqueID + ".txt";
+		String uniqueID = GenerateUid();
+		fileName = wavePath + uniqueID + "_script";
 		try {
-			File txtFile = new File(fileName);
+			File scriptFile = new File(fileName);
 			FileWriter fw;
 
-			fw = new FileWriter(txtFile.getAbsoluteFile());
+			fw = new FileWriter(scriptFile.getAbsoluteFile());
+			String changeVoice = "(" + voice + ")";
+			String sayEmotional = "(utt.save.wave (SayEmotional '" + emotion + " \"" + txt + "\" " + level +") " + "\"" + fileName + "\")";
+			String quit = "(quit)";
 			BufferedWriter bw = new BufferedWriter(fw);
-			bw.write(txt);
+			bw.write(changeVoice);
+			bw.write(System.getProperty("line.separator"));
+			bw.write(sayEmotional);
+			bw.write(System.getProperty("line.separator"));
+			bw.write(quit);
 			bw.close();
 			
-			if (!txtFile.exists()){
+			if (!scriptFile.exists()){
 				System.out.println("Generate txt file error");	
 			}
 				
@@ -128,32 +132,6 @@ public class Text2Wave extends ServerResource{
 		return fileName;
 	}
 	
-	private String generateSCMFile(String voice)
-	{
-		String fileName = "";
-		String uniqueID = generateUid();
-		fileName = wavePath + uniqueID + ".scm";
-		try {
-			File scmFile = new File(fileName);
-			FileWriter fw;
-
-			fw = new FileWriter(scmFile.getAbsoluteFile());
-			BufferedWriter bw = new BufferedWriter(fw);
-			bw.write("(" + voice + ")");
-			bw.close();
-			
-			if (!scmFile.exists()){
-				System.out.println("Generate scm file error");	
-			}
-				
-		} catch (IOException e) {
-			e.printStackTrace();
-		}  catch (SecurityException e) {
-			   e.printStackTrace();
-			  }
-
-		return fileName;
-	}
 	
 	private boolean excuteCommand(String[] command) 
 	{
