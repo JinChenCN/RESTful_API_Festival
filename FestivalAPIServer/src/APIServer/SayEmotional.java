@@ -79,7 +79,7 @@ public class SayEmotional extends ServerResource{
 		FileRepresentation result = new FileRepresentation(errorWave,MediaType.AUDIO_WAV);
 		String waveFilePath = "";
 		waveFilePath = wavePath + GenerateUid() + ".wav";
-		String scriptFile = generateScriptFile(txt);		
+		String scriptFile = generateScriptFile(txt, waveFilePath);		
 		String[] Command = {"/bin/sh", "-c", "cd " + festivalHome +"; ./" + "festival " + "--batch " + scriptFile};
 
 		if(excuteCommand(Command))
@@ -98,7 +98,7 @@ public class SayEmotional extends ServerResource{
 		return UUID.randomUUID().toString();
 	}
 	
-	private String generateScriptFile(String txt)
+	private String generateScriptFile(String txt, String waveFilePath)
 	{
 		String fileName = "";
 		String uniqueID = GenerateUid();
@@ -109,9 +109,11 @@ public class SayEmotional extends ServerResource{
 
 			fw = new FileWriter(scriptFile.getAbsoluteFile());
 			String changeVoice = "(" + voice + ")";
-			String sayEmotional = "(utt.save.wave (SayEmotional '" + emotion + " \"" + txt + "\" " + level +") " + "\"" + fileName + "\")";
+			String sayEmotional = "(utt.save.wave (SayEmotional '" + emotion + " \"" + txt + "\" " + level +") " + "\"" + waveFilePath + "\")";
 			String quit = "(quit)";
 			BufferedWriter bw = new BufferedWriter(fw);
+			bw.write("#!/bin/bash");
+			bw.write(System.getProperty("line.separator"));
 			bw.write(changeVoice);
 			bw.write(System.getProperty("line.separator"));
 			bw.write(sayEmotional);
