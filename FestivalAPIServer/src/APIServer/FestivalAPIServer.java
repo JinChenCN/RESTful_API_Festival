@@ -9,7 +9,7 @@ import java.util.Timer;
 import org.restlet.Component;
 import org.restlet.data.Protocol;
 
-public class Main {
+public class FestivalAPIServer {
 	static Integer port = 8183;
 	static String wavePath = "";
 	static String festivalHome = "";
@@ -20,12 +20,7 @@ public class Main {
 	static String errorWave = "Error.wav";
 	static String noAuthorityWave = "noAuthority.wav";
 	
-	public static void main(String[] args) throws Exception {
-		if (args.length == 0)
-		{
-			System.out.println("Please add parameter to indicate the path of the config file.");
-			return;
-		}
+	public FestivalAPIServer(String[] args){
 		getProperties(args[0]);		
 		
 		// Initiate temporary folder for keeping auto generated files
@@ -49,15 +44,27 @@ public class Main {
 	            new APIServer());  
 
 	    // Start the component.  
-	    component.start();	
+	    try {
+			component.start();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
 	    
 	    //Delete tmp files every 1 hour
 	    Timer time = new Timer(); 
-	    time.schedule(new DeleteFile(1, wavePath), 0, 1000 * 60 * 60 * 1);	   
-	   
+	    time.schedule(new DeleteFile(1, wavePath), 0, 1000 * 60 * 60 * 1);	
+	}
+	
+	public static void main(String[] args) {
+		if (args.length == 0)
+		{
+			System.out.println("Please add parameter to indicate the path of the config file.");
+			return;
+		}
+		FestivalAPIServer myServer = new FestivalAPIServer(args);		   	   
 	} 
 	
-	private static void getProperties(String configFilePath){
+	private void getProperties(String configFilePath){
 		Properties configFile = new Properties();
 		FileInputStream file;
 		try {

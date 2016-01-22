@@ -21,11 +21,11 @@ import org.restlet.resource.ServerResource;
 
 public class Text2Wave extends ServerResource{
 	String txt = "";
-	String errorWave = Main.errorWave;
-	String noAuthorityWave = Main.noAuthorityWave;
-	String wavePath = Main.wavePath;
-	String festivalHome = Main.festivalHome;
-	String voice = Main.defaultVoice;
+	String errorWave = FestivalAPIServer.errorWave;
+	String noAuthorityWave = FestivalAPIServer.noAuthorityWave;
+	String wavePath = FestivalAPIServer.wavePath;
+	String festivalHome = FestivalAPIServer.festivalHome;
+	String voice = FestivalAPIServer.defaultVoice;
 	String token = "";
 	
 	@Get
@@ -48,7 +48,7 @@ public class Text2Wave extends ServerResource{
 		if(form.getValues("token") != null && form.getValues("token") != "")
 		{
 			token = form.getValues("token");
-			if (token.equals(Main.token))
+			if (token.equals(FestivalAPIServer.token))
 			{		
 				result = process(txt);		
 			}
@@ -72,7 +72,7 @@ public class Text2Wave extends ServerResource{
 		String txtFile = generateTxtFile(txt);	
 		String[] Command = new String[3];
 		System.out.println("The current voice is: "+voice);
-		if (voice.equals(Main.defaultVoice))
+		if (voice.equals(FestivalAPIServer.defaultVoice))
 		{
 	
 			String[] CommandOnlyTxt = {"/bin/sh", "-c", "cd " + festivalHome +"; ./" + "text2wave " + txtFile + " -o "  + waveFilePath};

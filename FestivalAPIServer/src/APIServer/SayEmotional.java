@@ -21,13 +21,13 @@ import org.restlet.resource.ServerResource;
 
 public class SayEmotional extends ServerResource{
 	String txt = "";
-	String errorWave = Main.errorWave;
-	String noAuthorityWave = Main.noAuthorityWave;
-	String wavePath = Main.wavePath;
-	String festivalHome = Main.festivalHome;
-	String voice = Main.defaultVoice;
-	String emotion = Main.defaultEmotion;
-	String level = Main.defaultLevel;
+	String errorWave = FestivalAPIServer.errorWave;
+	String noAuthorityWave = FestivalAPIServer.noAuthorityWave;
+	String wavePath = FestivalAPIServer.wavePath;
+	String festivalHome = FestivalAPIServer.festivalHome;
+	String voice = FestivalAPIServer.defaultVoice;
+	String emotion = FestivalAPIServer.defaultEmotion;
+	String level = FestivalAPIServer.defaultLevel;
 	String token = "";
 	
 	@Get
@@ -58,7 +58,7 @@ public class SayEmotional extends ServerResource{
 		if(form.getValues("token") != null && form.getValues("token") != "")
 		{
 			token = form.getValues("token");
-			if (token.equals(Main.token))
+			if (token.equals(FestivalAPIServer.token))
 			{		
 				result = process(txt);		
 			}
