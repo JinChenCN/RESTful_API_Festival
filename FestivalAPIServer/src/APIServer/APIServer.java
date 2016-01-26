@@ -17,6 +17,7 @@ public class APIServer extends Application {
         // Defines routes
         router.attach("/txt2wave", Text2Wave.class);
         router.attach("/emotionalWave", SayEmotional.class);
+        router.attach("/file2wave", File2Wave.class);
         return router;
     }
 
