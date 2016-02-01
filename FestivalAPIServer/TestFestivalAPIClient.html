@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <!-- Standard Meta -->
+      <meta charset="utf-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+      <meta http-equiv="content-type" content="IE=edge,chrome=1" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+      <!-- Site Properities -->
+      <title>Homepage - RESTful API Test</title>
+      <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+      <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+      <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+      <!--bootsrap-->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+      <!--jquery-->
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+      <script type="text/javascript">
+          function checkGetForm(form) {
+
+          if(form.txt.value=='') {
+                alert("Please input text!");
+                form.txt.focus();
+                return false;
+           }
+
+         if(form.token.value=='') {
+                alert("Please input API Token!");
+                form.token.focus();
+                return false;
+           }
+         return true;
+         };
+
+       function checkPostForm(form) {
+
+          if(form.file.value=='') {
+                alert("Please choose a scm file!");
+                form.file.focus();
+                return false;
+           }
+         return true;
+         }
+</script>
+</head>
+<body>
+		<center><font style="color:#2196F3"><h1>Festival RESTful API Web Client</h1></font></center>
+    <table style="margin: 5%;" border="1">
+      <tr valign="top">
+      <td style="width:40%; color: #013ADF;" >
+		<form id="text2waveForm" method="get" action="http://robotspeech.auckland.ac.nz:8183/api/txt2wave" enctype="multipart/form-data" target="myiframe" onsubmit="return checkGetForm(this)">	
+      <SELECT NAME="voice" style="height:7%;width:60%;top:14%;left:35%;">
+        <OPTION VALUE="">Choose a Voice
+        <OPTION VALUE="voice_akl_nz_jdt_diphone">voice_akl_nz_jdt_diphone
+        <OPTION VALUE="voice_akl_nz_cw_cg_cg">voice_akl_nz_cw_cg_cg
+        <OPTION VALUE="voice_akl_nz_jh_cg_cg">voice_akl_nz_jh_cg_cg
+      </SELECT>	
+      <h3><p><font>This is for testing "Text to Wav" : </font></p></h3>
+			<p><textarea id="txt" name="txt" rows="10" cols="45"></textarea></p>
+      <div id="Token" style="visibility: hidden">
+			<p><font>API Token : </font><input id="token" name="token" type="password" value="TestToken"/></input></p>
+			</div>
+			<p><button type="submit"/><i class="glyphicon glyphicon-play-circle" aria-hidden="true">Text to Wav</i></button></p>
+		</form>
+</td>
+      <td style="width:40%; color: red;" >
+    <form id="sayEmotionlForm" method="get" action="http://robotspeech.auckland.ac.nz:8183/api/emotionalWave" enctype="multipart/form-data" target="myiframe" onsubmit="return checkGetForm(this)">  
+      <SELECT NAME="voice" style="height:7%;width:60%;top:14%;left:35%;">
+        <OPTION VALUE="">Choose a Voice
+        <OPTION VALUE="voice_akl_nz_jdt_diphone">voice_akl_nz_jdt_diphone
+        <OPTION VALUE="voice_akl_nz_cw_cg_cg">voice_akl_nz_cw_cg_cg
+        <OPTION VALUE="voice_akl_nz_jh_cg_cg">voice_akl_nz_jh_cg_cg
+      </SELECT>  
+      <SELECT NAME="emotion" style="height:7%;width:60%;top:14%;left:35%;">
+        <OPTION VALUE="">Choose an Emotion
+        <OPTION VALUE="Happy">Happy
+        <OPTION VALUE="Neutral">Neutral
+      </SELECT>
+      <SELECT NAME="level" style="height:7%;width:60%;top:22%;left:35%;">
+        <OPTION VALUE=""> Choose a Level of Emotion
+        <OPTION VALUE="1">1
+        <OPTION VALUE="2">2
+        <OPTION VALUE="3">3
+      </SELECT>
+      <h3><p><font>This is for testing "Say Emotional" : </font></p></h3>
+      <p><textarea id="txt" name="txt" rows="10" cols="45"></textarea></p>
+      <div id="Token" style="visibility: hidden">
+      <p><font>API Token : </font><input id="token" name="token" type="password" value="TestToken"/></input></p>
+      </div>
+      <p><button type="submit"/><i class="glyphicon glyphicon-play-circle" aria-hidden="true" >Say Emotional</i></button></p>
+    </form>
+</td>
+
+      <td style="width:20%; color: #DF01D7;">
+    <form method="post" action="http://robotspeech.auckland.ac.nz:8183/api/file2wave" enctype="multipart/form-data" target="myiframe" onsubmit="return checkPostForm(this)">
+    <h3><font>This is for testing "File to Wav" : </font></h3>
+    <p><input id="file" type="file" name="fileToUpload" /></p>
+    
+    <p><button type="submit" /><i class="glyphicon glyphicon-play-circle" aria-hidden="true">File to Wav</i></button>
+</p>
+    </form>
+  </td>
+</tr>
+    </table>
+    <iframe name="myiframe" style="visibility: hidden"></iframe>
+	</body>
+</html>
