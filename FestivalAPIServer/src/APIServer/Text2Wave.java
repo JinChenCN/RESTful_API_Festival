@@ -72,7 +72,6 @@ public class Text2Wave extends ServerResource{
 		waveFilePath = wavePath + Util.generateUid() + ".wav";
 		String txtFile = generateTxtFile(txt);	
 		String[] Command = new String[3];
-		System.out.println("The current voice is: "+voice);
 		if (voice.equals(FestivalAPIServer.defaultVoice))
 		{
 	
